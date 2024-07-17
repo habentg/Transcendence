@@ -1,0 +1,17 @@
+{% extends "auth_AM/base.html" %}
+{% load static %}
+{% block title %}
+<title>Home</title>
+{% endblock title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+<div class="contianer-fluid" style="height: 80vh;">
+    <button id="signupBtn" class="btn btn-dark" type="submit">Sign Up</button>
+    <button id="signinBtn" class="btn btn-secondary" type="submit">Sign In</button>
+</div>
+{% endblock content %}
+{% block script %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock script %}
