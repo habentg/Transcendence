@@ -28,4 +28,7 @@ fclean: down
 # ----------------------- rebuilding from scratch --------------------------
 # rebuild: fclean up 
 
+push:
+	./prep/git-operations.sh
+
 .PHONY: up down fclean re restart rebuild
