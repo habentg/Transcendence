@@ -1,14 +1,19 @@
+
 COMPOSE 		= cd ./source/ && docker compose
+
 
 # ----------------------- building services --------------------------
 up:
 	$(COMPOSE) -f docker-compose.yml up --build -d
 
-# ----------------------- removing services --------------------------
 down:
 	$(COMPOSE) -f docker-compose.yml down
 
+re: down up # rebuilding the services without deleting the persistent storages
+
+
 # ----------------------- restarting services --------------------------
+
 start:
 	$(COMPOSE) -f docker-compose.yml start
 
@@ -17,18 +22,34 @@ stop:
 
 restart: stop start # restarting the services (volumes, network, and images stay the same)
 
-re: down up # rebuilding the services without deleting the persistent storages
 
-# ----------------------- Deleting services and their resources --------------------------
+# ----------------------- Deleting resources and rebuilding --------------------------
+
 fclean: down
 	@yes | docker system prune --all
 	@docker volume rm $$(docker volume ls -q)
-# @rm -rf ${DB_DIR} ${DATA_DIR}
 
-# ----------------------- rebuilding from scratch --------------------------
-# rebuild: fclean up 
+rebuild: fclean up 
+
+# ---------------------------- git push target -------------------------------
 
 push:
-	./prep/git-operations.sh
+	@if [ -z "$(msg)" ]; then \
+		echo "Please provide a commit message."; \
+		echo "Usage: make push msg=\"<commit_message>\""; \
+		exit 1; \
+	fi
+	git add .
+	git status
+	git commit -m "$(msg)"
+	git push
 
+
+# ---------------------------- PHONY PHONY ... -------------------------------
 .PHONY: up down fclean re restart rebuild
+
+
+re-transcendence:
+	$(COMPOSE) -f docker-compose.yml stop transcendence
+	$(COMPOSE) -f docker-compose.yml rm -f transcendence
+	$(COMPOSE) -f docker-compose.yml up -d --build transcendence

@@ -1,13 +1,9 @@
 FROM python:3
 
-WORKDIR /usr/transendence
+WORKDIR /transcendence
 
-COPY ./requirements.txt ./
+COPY requirements.txt /transcendence/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-
 EXPOSE 8000
-
-# ENTRYPOINT [ "/bin/bash" ]
