@@ -1,0 +1,28 @@
+{% extends "auth_AM/base.html" %}
+{% load static %}
+{% block title %}
+<title>Landing-Page</title>
+{% endblock title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+<div class="contianer-fluid">
+    <div id="landing" class="contianer-fluid">
+        <div class="landing-content container">
+            <h1>Ping Pong Game</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <button type="submit" class="btn btn-dark">PLAY NOW!</button>
+        </div>
+    </div>
+    <div id="content" class="contianer-fluid">
+        <h3>content</h3>
+    </div>
+    <div id="call-to-action" class="contianer-fluid">
+        <h5>call to action</h5>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+<script src="{% static 'js/landing.js' %}"></script>
+{% endblock script %}

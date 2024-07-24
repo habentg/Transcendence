@@ -1,0 +1,31 @@
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-image: url('/static/images/table-tennis-player-celebrates-victory-jpg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* #landing {
+    height: 80vh;
+    border: 1px solid lightgreen;
+    background-color: rgb(106, 102, 102);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#content {
+    height: 30vh;
+    border: 1px solid lightblue;
+    background-color: rgb(214, 178, 178);
+}
+#call-to-action {
+    height: 20vh;
+    border: 1px solid lightcoral;
+    background-color: rgb(145, 207, 180);
+} */

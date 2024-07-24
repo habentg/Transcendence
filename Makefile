@@ -31,6 +31,17 @@ fclean: down
 
 rebuild: fclean up 
 
+# ----------------------- Managing transcendence service only --------------------------
+
+trans-down:
+	$(COMPOSE) -f docker-compose.yml stop transcendence
+	$(COMPOSE) -f docker-compose.yml rm -f transcendence
+
+trans-up:
+	$(COMPOSE) -f docker-compose.yml up --build -d --no-deps transcendence
+
+trans-restart: trans-down trans-up
+
 # ---------------------------- git push target -------------------------------
 
 push:
@@ -48,8 +59,3 @@ push:
 # ---------------------------- PHONY PHONY ... -------------------------------
 .PHONY: up down fclean re restart rebuild
 
-
-re-transcendence:
-	$(COMPOSE) -f docker-compose.yml stop transcendence
-	$(COMPOSE) -f docker-compose.yml rm -f transcendence
-	$(COMPOSE) -f docker-compose.yml up -d --build transcendence
