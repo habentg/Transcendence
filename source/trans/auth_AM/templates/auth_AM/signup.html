@@ -91,10 +91,16 @@
       <div class="or-separator">
         <span>or</span>
       </div>
-      <button type="submit" class="btn btn-dark my-3">42</button>
+      <button type="button" class="btn btn-dark my-3 fourty-two">42</button>
     </form>
   </div>
 </main>
 {% endblock content %} {% block script %}
+<script>
+  const clientId = "{{ client_id }}"; // Use the client ID passed from Django
+  // console.log("Client ID from Django:", clientId); // Debugging line to ensure client_id is correct
+  window.clientId = clientId;
+</script>
 <script src="{% static 'js/signup.js' %}"></script>
+<script src="{% static 'js/fourtytwoOauth.js' %}"></script>
 {% endblock script %}

@@ -40,8 +40,8 @@ def signup_page(request):
         """
         login(request, player)
         return redirect('/home/')
-         
-    return render(request, 'auth_AM/signup.html', context={})
+    client_id = os.getenv('CLIENT_ID')
+    return render(request, 'auth_AM/signup.html', {'client_id': client_id})
 
 
 
@@ -67,13 +67,11 @@ def signin_page(request):
 
 
 def oauth_callback(request):
-    client_secret = os.getenv('CLIENT_SECRET')
     client_id = os.getenv('CLIENT_ID')
+    client_secret = os.getenv('CLIENT_SECRET')
     code = request.GET.get('code')
     if not code:
-        print("Failed to get code from request!!!!!")
         return HttpResponse('Authorization failed.')
-    print('this is the code')
     # Exchange authorization code for access token
     token_response = requests.post('https://api.intra.42.fr/oauth/token', data={
         'grant_type': 'authorization_code',
@@ -84,14 +82,12 @@ def oauth_callback(request):
     })
 
     if token_response.status_code != 200:
-        print("Failed to exchange code for access token!!!!!")
         return HttpResponse('Failed to obtain access token.')
 
     token_json = token_response.json()
     access_token = token_json.get('access_token')
 
     if not access_token:
-        print("Failed at access token!!!!!")
         return HttpResponse('Failed to obtain access token.')
 
     # Use the access token to access the user's data
@@ -100,12 +96,29 @@ def oauth_callback(request):
     })
 
     if user_info_response.status_code != 200:
-        print("Failed to get user info!!!!!")
         return HttpResponse('Failed to obtain user information.')
-
+    print(user_info_response)
     user_info = user_info_response.json()
-    print("Successfully authenticated!!!!!!")
-    return HttpResponse(f'Hello, {user_info["first_name"]}')
+    """ checking if user already exists in a db """
+    player = Player.objects.filter(username=user_info['login']).first()
+    if player:
+        print("42 username exists")
+        login(request, player)
+        return redirect('/home/')
+    
+    """ creating new player and saving him in db """
+    newPlayer = Player.objects.create_user(
+        first_name=user_info['first_name'],
+        last_name=user_info['last_name'],
+        username=user_info['login'],
+        email=user_info['email']
+    )
+    # player.set_password(password)
+    # newPlayer.save()
+    login(request, newPlayer)
+    return redirect('/home/')
+    # return render(request, 'auth_AM/auth_failed.html', {'user_info': user_info})
+    # return HttpResponse(f'Hello, {user_info["first_name"]}')
 
 def authorized(request):
     return HttpResponse("authorized!!!")

@@ -9,9 +9,13 @@
 {% endblock stylesheet %}
 {% block content %}
 <div class="container-fluid">
-    <h2>Failed to Authenticate!!!!!!!</h2>
+    <h3> auth auth auth</h3>
 </div>
 {% endblock content %}
 {% block script %}
+<script>
+    const userInfo = "{{ user_info }}"
+    console.log(userInfo)
+</script>
 <!-- <script src="{% static 'js/home.js' %}"></script> -->
 {% endblock script %}
