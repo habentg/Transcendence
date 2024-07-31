@@ -9,9 +9,12 @@
 {% block content %}
 <div class="contianer-fluid">
   {% if messages %}
-  <div class="alert alert-dark" role="alert">
+  <div class="alert alert-success messagebox" role="alert" style="display: block;">
     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
     {% for message in messages %} {{ message }} {% endfor %}
+    <button type="button" class="close_messagebox" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   {% endif %}
   <div id="landing" class="container">

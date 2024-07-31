@@ -1,10 +1,9 @@
-const signupBtn = document.getElementById('signupBtn');
-const signinBtn = document.getElementById('signinBtn');
+const messagebox_btn = document.querySelector('.close_messagebox');
 
-// signupBtn.addEventListener('click', () => {
-//     window.location.href ='http://127.0.0.1/signup/';
-// })
-
-// signinBtn.addEventListener('click', () => {
-//     window.location.href ='http://127.0.0.1/signin/';
-// })
+if (messagebox_btn) {
+    messagebox_btn.addEventListener('click', () => {
+        const messagebox = document.querySelector('.messagebox');
+        messagebox.style.display = 'none';
+        console.log('messagebox closed');
+    });
+}
