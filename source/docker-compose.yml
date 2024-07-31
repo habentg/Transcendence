@@ -15,6 +15,11 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   transcendence:
     container_name: trans_container
@@ -26,7 +31,8 @@ services:
       - "80:8000"
     restart: always
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - trans
     env_file:
@@ -35,7 +41,7 @@ services:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
     volumes:
       - ./trans:/transcendence
-    command: "python manage.py runserver 0.0.0.0:8000"
+    command: "./entry_point.sh"
 
 volumes:
   postgres_data:
